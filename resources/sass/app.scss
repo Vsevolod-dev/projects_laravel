@@ -1,0 +1,86 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Profile
+@import 'profile';
+
+// Posts
+@import 'posts';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+body {
+  background-color: #e0effdbf;
+  font-family: Roboto, sans-serif;
+}
+
+.dropzone-existed img {
+  border-radius: 20px;
+  overflow: hidden;
+  width: 120px;
+  height: 120px;
+  position: relative;
+  display: block;
+  z-index: 10;
+}
+
+a.disabled {
+  pointer-events: none
+}
+
+
+.mdi {
+  cursor: pointer;
+}
+
+a.a-light {
+  color: var(--bs-gray-100);
+}
+
+.padding {
+  padding: 3rem 8rem !important;
+}
+
+@media (max-width: 1199.98px) {
+  .padding {
+    padding: 3rem 6rem !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .container {
+    padding: 0 15px;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .padding {
+    padding: 3rem 1rem !important;
+  }
+}
+
+.row {
+  --bs-gutter-x: 0;
+  margin-left: 0 !important; 
+  margin-right: 0 !important;
+}
+
+@media (max-width: 991.98px) {
+  .offcanvas a {
+    text-align: center;
+    font-size: 32px;
+  }
+}
+
+.user-profile {
+  .row > input {
+    width: 100%;
+    max-width: 150px;
+    padding: 0 3px;  
+    margin: 5px auto;
+  }
+}
