@@ -1,10 +1,10 @@
 <?php
 
 
-namespace App\Services\Post;
+namespace App\Services\Project;
 
 use App\Models\Image;
-use App\Models\Post;
+use App\Models\Project;
 use App\Models\Tag;
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -30,9 +30,9 @@ class Service
             }
             $data['user_id'] = auth()->user()->id;
 
-            $post = Post::create($data);
-            $post->tags()->attach($tagIds);
-            $this->attachImages($post, $images);
+            $project = Project::create($data);
+            $project->tags()->attach($tagIds);
+            $this->attachImages($project, $images);
     
             DB::commit();
         } catch (Exception $exception) {
@@ -40,10 +40,10 @@ class Service
             return $exception->getMessage();
         }
 
-        return $post;
+        return $project;
     }
 
-    public function update($post, $data)
+    public function update($project, $data)
     {
         try {
             DB::beginTransaction();
@@ -62,10 +62,10 @@ class Service
             }
             $data['user_id'] = auth()->user()->id;
 
-            $post->update($data);
+            $project->update($data);
             // sync remove old tags and attach new tags
-            $post->tags()->sync($tagIds);
-            $this->updateImages($post, $images);
+            $project->tags()->sync($tagIds);
+            $this->updateImages($project, $images);
 
             DB::commit();
         } catch (Exception $exception) {
@@ -73,7 +73,7 @@ class Service
             return $exception->getMessage();
         }
         
-        return $post->fresh();
+        return $project->fresh();
     }
 
     // private function getCategoryId($category)
@@ -134,21 +134,21 @@ class Service
         return $tagIds;
     }
 
-    public function attachImages($post, $images)
+    public function attachImages($project, $images)
     {
         foreach ($images as $image) {
             $image['extension'] = explode('.', $image['name'])[1];
-            $image['post_id'] = $post->id;
+            $image['project_id'] = $project->id;
             if (isset($image['id'])) unset($image['id']);
             unset($image['uuid']);
             Image::create($image);
         }
     }
 
-    public function updateImages($post, $newImages)
+    public function updateImages($project, $newImages)
     {
         // delete old images
-        $oldImages = $post->images;
+        $oldImages = $project->images;
 
         
         $newImagesPath = array_map(function($newImage) {
@@ -169,6 +169,6 @@ class Service
         }
 
         // add new images
-        $this->attachImages($post, $newImages);
+        $this->attachImages($project, $newImages);
     }
 }

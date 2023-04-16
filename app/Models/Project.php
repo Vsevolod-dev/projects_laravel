@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Traits\Filterable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Post extends Model
+class Project extends Model
 {
     use HasFactory;
     use Filterable;
     use SoftDeletes;
-    protected $table = 'posts';
+    protected $table = 'projects';
     protected $guarded = false;
 
     public function tags()

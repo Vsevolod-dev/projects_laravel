@@ -1,10 +1,10 @@
 <?php
 
 
-namespace App\Http\Controllers\Post;
+namespace App\Http\Controllers\Project;
 
 use App\Http\Controllers\Controller;
-use App\Services\Post\Service;
+use App\Services\Project\Service;
 
 class BaseController extends Controller
 {

@@ -27,7 +27,7 @@
     <div class="row">
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
             <div class="container">
-                <a class="navbar-brand" href="{{ route('post.index') }}">Projects</a>
+                <a class="navbar-brand" href="{{ route('project.index') }}">Projects</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
                     data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar"
                     aria-label="Toggle navigation">
@@ -43,16 +43,16 @@
                     <div class="offcanvas-body">
                         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                             <li class="nav-item">
-                                <a class="nav-link {{ in_array(Request::path(), ['posts', '/']) ? 'active' : '' }}"
-                                    aria-current="page" href="{{ route('post.index') }}">Посты</a>
+                                <a class="nav-link {{ in_array(Request::path(), ['projects', '/']) ? 'active' : '' }}"
+                                    aria-current="page" href="{{ route('project.index') }}">Посты</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link {{ Request::path() === 'profile' ? 'active' : '' }}"
                                     href="{{ route('profile.index') }}">Профиль</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ Request::path() === 'posts/create' ? 'active' : '' }}"
-                                    href="{{ route('post.create') }}">Создать</a>
+                                <a class="nav-link {{ Request::path() === 'projects/create' ? 'active' : '' }}"
+                                    href="{{ route('project.create') }}">Создать</a>
                             </li>
                         </ul>
                         @auth

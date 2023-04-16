@@ -13,8 +13,8 @@ class Image extends Model
     protected $table = 'images';
     protected $guarded = false;
 
-    public function posts()
+    public function projects()
     {
-        return $this->belongsTo(Post::class);
+        return $this->belongsTo(Project::class);
     }
 }

@@ -1,40 +1,49 @@
 @extends('layouts.main')
 @section('content')
-    <h1>Создать проект</h1>
-    <form action="{{ route('post.store') }}" method="POST">
+    <h1>Редактировать проект</h1>
+    <form action="{{ route('project.update', $project->id) }}" method="POST">
         @csrf
+        @method('patch')
         <div class="form-group">
             <label for="inputTitle">Название</label>
-            <input value="{{ old('title') }}" name="title" type="text" class="form-control" id="inputTitle">
+            <input value="{{ $project->title }}" name="title" type="text" class="form-control" id="inputTitle">
             @error('title')
                 <small class="form-text text-danger">{{ $message }}</small>
             @enderror
         </div>
         <div class="form-group mt-3">
             <label for="inputDescription">Описание</label>
-            <textarea name="description" type="text" class="form-control" id="inputDescription"></textarea>
+            <textarea name="description" type="text" class="form-control" id="inputDescription">{{ $project->description }}</textarea>
             @error('description')
                 <small class="form-text text-danger">{{ $message }}</small>
             @enderror
         </div>
         <div class="form-group mt-3">
             <label for="inputUrl">Ссылка на Гитхаб</label>
-            <input value="{{ old('url') }}" name="url" type="text" class="form-control" id="inputUrl">
+            <input value="{{ $project->url }}" name="url" type="text" class="form-control" id="inputUrl">
             @error('url')
-                <small class="form-text text-danger">{{ $message }}</small>
+                <small class="form-text
+                text-danger">{{ $message }}</small>
             @enderror
         </div>
         <div class="form-group mt-3">
             <label for="tagsSelect">Тэги</label>
             <select name="tags[]" multiple class="form-control multi-selector" id="tagsSelect">
                 @foreach ($tags as $tag)
-                    <option value="{{ $tag->id }}">{{ $tag->title }}</option>
+                    <option
+                        @foreach ($project->tags as $projectTag)
+                    {{ $tag->id === $projectTag->id ? 'selected' : '' }} @endforeach
+                        value="{{ $tag->id }}">{{ $tag->title }}
+                    </option>
                 @endforeach
             </select>
         </div>
-        <input hidden type="text" name="images" value="[]">
-        <div id="previews" class="dropzone mt-3"></div>
-        <button type="submit" class="btn btn-primary mt-3">Сохранить</button>
+        <input hidden type="text" name="images" value="{{ $project->images }}">
+        <div id="previews" class="dropzone dropzone-existed mt-3"></div>
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary">Обновить</button>
+            <a href="{{ route('project.show', $project->id) }}" class="btn btn-primary">Назад</a>
+        </div>
     </form>
     <script>
         const images = []
@@ -52,7 +61,7 @@
             thumbnailHeight: 100,
             clickable: "#previews",
             ignoreHiddenFiles: true,
-            acceptedFiles: ".png, .jpg, .jpeg,",
+            acceptedFiles: ".png, .jpg, .jpeg",
             acceptedMimeTypes: null,
             autoProcessQueue: true,
             addRemoveLinks: true,
@@ -75,9 +84,39 @@
                 document.querySelector("input[name=images]").value = JSON.stringify(arr)
             },
             init: function() {
+                var myDropzone = this;
+
+                const images = JSON.parse(document.querySelector("input[name=images]").value)
+
+                //Populate any existing thumbnails
+                if (images) {
+                    for (let i = 0; i < images.length; i++) {
+                        const mockFile = {
+                            name: images[i].name,
+                            size: images[i].size,
+                            type: 'image/jpeg',
+                            status: Dropzone.ADDED,
+                            url: `/images/${images[i].path}`
+                        };
+
+                        myDropzone.emit("addedfile", mockFile);
+                        myDropzone.emit("thumbnail", mockFile, `/images/${images[i].path}`);
+                        myDropzone.emit("complete", mockFile);
+
+                        myDropzone.files.push(mockFile);
+                    }
+                }
+
                 this.on("removedfile", function(file) {
                     let arr = JSON.parse(document.querySelector("input[name=images]").value)
-                    arr = arr.filter(image => image.uuid !== file.upload.uuid)
+                    arr = arr.filter(image => {
+                        if (file.upload) {
+                            return image.uuid !== file.upload.uuid
+                        } else {
+                            const path = file.url.split('/')[2]
+                            return path !== image.path
+                        }
+                    })
                     document.querySelector("input[name=images]").value = JSON.stringify(arr)
                 });
             }

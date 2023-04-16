@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Resources\Post;
+namespace App\Http\Resources\Project;
 
 use App\Http\Resources\Image\ImageResource;
 use App\Http\Resources\Tag\TagResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PostResource extends JsonResource
+class ProjectResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

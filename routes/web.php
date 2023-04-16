@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Hash;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,18 +15,18 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::group(['namespace' => 'Post'], function() {
+Route::group(['namespace' => 'Project'], function() {
     Route::group(['middleware' => 'auth'], function() {    
-        Route::get('/posts/create', CreateController::class)->name('post.create');
-        Route::post('/posts', StoreController::class)->name('post.store');
-        Route::get('/posts/{post}/edit', EditController::class)->name('post.edit');
-        Route::patch('/posts/{post}', UpdateController::class)->name('post.update');
-        Route::delete('/posts/{post}', DestroyController::class)->name('post.destroy');
+        Route::get('/projects/create', CreateController::class)->name('project.create');
+        Route::post('/projects', StoreController::class)->name('project.store');
+        Route::get('/projects/{project}/edit', EditController::class)->name('project.edit');
+        Route::patch('/projects/{project}', UpdateController::class)->name('project.update');
+        Route::delete('/projects/{project}', DestroyController::class)->name('project.destroy');
     });
     
-    Route::get('/', IndexController::class)->name('post.index');
-    Route::get('/posts', IndexController::class)->name('post.index');
-    Route::get('/posts/{post}', ShowController::class)->name('post.show');
+    Route::get('/', IndexController::class)->name('project.index');
+    Route::get('/projects', IndexController::class)->name('project.index');
+    Route::get('/projects/{project}', ShowController::class)->name('project.show');
 });
 
 Route::group(['namespace' => 'User', 'middleware' => 'auth'], function() {

@@ -5,15 +5,15 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h2 class="display-4 fw-bold">{{ $post->title }}</h2>
-                    <h3 class="fw-normal">{{ $post->description }}</h3>
+                    <h2 class="display-4 fw-bold">{{ $project->title }}</h2>
+                    <h3 class="fw-normal">{{ $project->description }}</h3>
 
-                    <a class="btn btn-primary mt-3" href="{{ $post->url }}" target="_blank">
+                    <a class="btn btn-primary mt-3" href="{{ $project->url }}" target="_blank">
                         Ссылка на Гитхаб
                     </a>
 
                     <div class="mt-4">
-                        @foreach ($post->tags as $k => $tag)
+                        @foreach ($project->tags as $k => $tag)
                             <span class="tag">
                                 <span>{{ $tag->title }}</span>
                             </span>
@@ -25,7 +25,7 @@
                         <div class="row">
                             <div class="swiper">
                                 <div class="swiper-wrapper">
-                                    @foreach ($post->images as $image)
+                                    @foreach ($project->images as $image)
                                         <?php
                                         $imageUrl = asset("images/$image->path");
                                         echo "<div class='swiper-slide' onclick='openImg(\"$image->id\")'><img src='$imageUrl' alt='Image' /></div>";
@@ -49,10 +49,10 @@
                             </div>
                         </div>
 
-                        @if (auth()->id() === $post->user_id)
+                        @if (auth()->id() === $project->user_id)
                             <div class="mt-4 d-flex">
-                                <a href="{{ route('post.edit', $post->id) }}" class="btn btn-success me-2">Редактировать</a>
-                                <form action="{{ route('post.destroy', $post->id) }}" method="POST">
+                                <a href="{{ route('project.edit', $project->id) }}" class="btn btn-success me-2">Редактировать</a>
+                                <form action="{{ route('project.destroy', $project->id) }}" method="POST">
                                     @csrf
                                     @method('delete')
                                     <input type="submit" class="btn btn-danger" value="Удалить">
@@ -61,7 +61,7 @@
                         @endif
 
                         <div class="mt-4">
-                            <a href="{{ route('post.index') }}" class="btn btn-primary">Назад</a>
+                            <a href="{{ route('project.index') }}" class="btn btn-primary">Назад</a>
                         </div>
                     </div>
                 </div>
@@ -92,7 +92,7 @@
             }
         });
 
-        let imagesInfo = '<?php echo $post->images; ?>';
+        let imagesInfo = '<?php echo $project->images; ?>';
         imagesInfo = JSON.parse(imagesInfo)
 
         const openImg = (id) => {

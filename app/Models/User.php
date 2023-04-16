@@ -47,8 +47,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function posts()
+    public function project()
     {
-        return $this->hasMany(Post::class);
+        return $this->hasMany(Project::class);
     }
 }

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Post;
+namespace App\Http\Controllers\Project;
 
-use App\Http\Filters\PostFilter;
-use App\Http\Requests\Post\FilterRequest;
-use App\Http\Resources\Post\PostResource;
-use App\Models\Post;
+use App\Http\Filters\ProjectFilter;
+use App\Http\Requests\Project\FilterRequest;
+use App\Http\Resources\Project\ProjectResource;
+use App\Models\Project;
 
 class IndexController extends BaseController
 {
@@ -18,23 +18,23 @@ class IndexController extends BaseController
         $page = $data['page'] ?? 1;
         $perPage = $data['per_page'] ?? 10;
 
-        $filter = app()->make(PostFilter::class, ['queryParams' => array_filter($data)]);
-        $posts = Post::filter($filter)->paginate($perPage, ['*'], 'page', $page);
+        $filter = app()->make(ProjectFilter::class, ['queryParams' => array_filter($data)]);
+        $projects = Project::filter($filter)->paginate($perPage, ['*'], 'page', $page);
 
-        // $posts = Post::where('is_published', 1)
+        // $projects = Project::where('is_published', 1)
         //     ->where('category_id', $data['category_id'])
         //     ->get();
 
-        // $query = Post::query();
+        // $query = Project::query();
         // if (isset($data['category_id'])) $query->where('category_id', $data['category_id']);
         // if (isset($data['title'])) $query->where('title', 'like', "%{$data['title']}%");
         // if (isset($data['content'])) $query->where('content', 'like', "%{$data['content']}%");
-        // $posts = $query->get();
+        // $projects = $query->get();
 
-        // $posts = Post::paginate(10);
+        // $projects = Project::paginate(10);
 
-        // return PostResource::collection($posts);
+        // return ProjectResource::collection($projects);
 
-        return view('post.index', compact('posts'));
+        return view('project.index', compact('projects'));
     }
 }

@@ -33,10 +33,10 @@ class Service
             // }
             // $data['user_id'] = auth()->user()->id;
 
-            // $post->update($data);
+            // $project->update($data);
             // // sync remove old tags and attach new tags
-            // $post->tags()->sync($tagIds);
-            // $this->updateImages($post, $images);
+            // $project->tags()->sync($tagIds);
+            // $this->updateImages($project, $images);
 
             DB::commit();
         } catch (Exception $exception) {
@@ -44,6 +44,6 @@ class Service
             return $exception->getMessage();
         }
         
-        // return $post->fresh();
+        // return $project->fresh();
     }
 }

@@ -11,7 +11,7 @@ class DropzoneController extends Controller
         $image = $request->file('file');
         $imageName = time().rand(1,99).'.'.$image->extension();
         $image->move(public_path('images'),$imageName);
-
+        
         return response()->json(['success' => $imageName]);
     }
 }

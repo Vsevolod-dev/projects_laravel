@@ -13,8 +13,8 @@ class Tag extends Model
     protected $table = 'tags';
     protected $guarded = false;
 
-    public function posts()
+    public function project()
     {
-        return $this->belongsToMany(Post::class);
+        return $this->belongsToMany(Project::class);
     }
 }
