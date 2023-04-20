@@ -31,7 +31,7 @@ class Service
             $data['user_id'] = auth()->user()->id;
 
             $project = Project::create($data);
-            $project->tags()->attach($tagIds);
+            if (isset($tagIds)) $project->tags()->attach($tagIds);
             $this->attachImages($project, $images);
     
             DB::commit();
@@ -64,7 +64,7 @@ class Service
 
             $project->update($data);
             // sync remove old tags and attach new tags
-            $project->tags()->sync($tagIds);
+            if (isset($tagIds)) $project->tags()->sync($tagIds);
             $this->updateImages($project, $images);
 
             DB::commit();
